@@ -1,0 +1,349 @@
+body
+{
+    background-color: #e4dbd3!important;
+   
+}
+
+.navbar
+{ 
+    
+ 	height: 150px;
+ 	background-color: gray;
+    z-index: 999;
+    position: fixed!important;
+    width: 100%;
+}
+.formuInscription
+{
+
+    position: relative;
+    padding: 50px;
+    top: 200px!important;
+    margin-bottom: 250px!important;
+    background-color: white;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;   
+
+}
+
+.usermenu
+{
+
+    text-align: center!important;
+    margin: auto!important;
+    padding: 200px!important;
+
+}
+
+.formuInscription .champ
+{
+
+    margin: 20px;
+    width: 90%!important;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
+.table:hover
+{
+    color: red;
+    font-size: 50px;
+}
+.nav li a
+{
+	font-size: 24px;
+	font-weight: bold;
+}
+.infos
+{
+    background-color: red!important;
+    height: 50px;
+}
+.logo img
+{
+	margin-top: -30px!important;
+	width: 150px;
+	height: auto;
+	text-align: center;
+	margin: auto;
+}
+.page-footer
+{
+    margin-bottom: 0px!important;
+    background-color: gray;
+    /*position: absolute;*/
+    height: 260px;
+    width: 100%;
+}
+.nav
+{
+    height: auto;
+    margin-top: -30px;
+	text-align: center;
+	border-radius: 10px;
+
+}
+.services a
+{
+    color: #696969!important;
+}
+.services
+{
+    color: #696969!important;
+    display: flex;
+    align-content: space-around;
+}
+.rech
+{
+    width: 500px;
+}
+.services h2, .principal h2
+{
+    color: #696969!important;
+    padding: 20px;
+    font-weight: bold; 
+    font-size: 50px!important;
+    
+}
+.rechercheNounou input
+{
+    width: 250px!important;
+}
+
+.service
+{
+    background-color: white;
+    width: 300px!important;
+    color: #696969!important;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+a
+{
+    color: white!important;
+}
+.service a:hover
+{
+    transform: scale(1.5); 
+}
+
+.slider h1
+{
+    z-index: 9;
+    color: white;
+    top: 400px;
+    font-weight: bold;
+    width: 100%;
+    font-size: 80px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+}
+.principal
+{
+    margin-top: 30px;
+}
+.carteNounou{ 
+    
+    margin: auto;
+    text-align: center;
+    position: relative;
+    top: 200px;
+    color: #696969;
+    margin-bottom: 250px;
+
+}
+#carte
+{
+
+    margin: auto;
+    text-align: center;
+    position: relative;
+    border: 1px solid gray;
+    width: 90%; 
+    height: 500px;
+    
+
+}
+.commente
+{
+    padding: 10px;
+    position: relative;
+    top: 10px;
+    margin: 20px!important;
+    background-color: white;
+    border-radius: 10px;
+    height: 230px;
+}
+.commente .champ
+{
+    margin-top: 5px!important;
+    margin-bottom: 5px!important;
+    margin: auto;
+    text-align: center;
+    width: 90%!important;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+.
+.commente .btn
+{
+     margin: auto!important;
+    text-align: center!important;
+}
+.avantage
+{
+    background-color: white;
+    width: 300px!important;
+    color: #696969;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.site-content
+{
+
+    min-height: 100%!important;
+
+}
+.nounous
+{
+
+    width: 70%;
+    position: relative;
+    top: 300px;
+    border-radius: 10px;
+    color: #696969;
+    color
+    height: auto;
+    background-color: whitesmoke;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+
+}
+.nounous a
+{
+
+    color: #696969!important;
+
+}
+.dispo
+{
+    border: 2px solid white;
+}
+.formConnexion
+{
+    padding: 50px;
+    margin-top: 150px!important;
+    margin-bottom: 150px!important;
+    background-color: white;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.btn
+{
+    background-color: #e4dbd3!important;
+   
+}
+
+.formConnexion .champ
+{
+    margin: 20px;
+    width: 90%!important;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+.dispo thead th
+{
+    border: 2px solid white;
+    padding: 15px!important;
+
+}
+.postuler
+{
+   padding: 50px;
+    margin-bottom: 350px!important;
+    background-color: white;
+    width: 70%;
+    position: relative;
+    top: 300px!important;
+    margin: auto;
+   
+    text-align: center;
+    border-radius: 10px;
+}
+
+.head
+{
+
+    margin-top: 0px!important;
+
+}
+.formPostul
+{
+   
+}
+.formPostul .ligne
+{
+    margin: 20px;
+    width: 90%!important;
+    border-radius: 10px;
+    padding: 5px;
+}
+.commenter
+{
+
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.oneComment
+{
+    border-radius: 150px 150px 150px 150px!important;
+    text-align: center;
+    padding: 50px;
+    margin: 10px;
+    width: 300px;
+
+}
+.comments
+{
+    background-color: #e4dbd3;
+    display: flex;
+    align-content: space-between;
+	height: 300px;
+	position: relative;
+    top: -200px;
+    
+}
+.slider{
+
+    height: auto;
+    width: 100%;  
+}
+.slide{
+     height: auto;
+     display: none;
+}
+.slide img
+{
+    /*margin-top: -900px;*/
+    width: 100%;
+    height: auto;
+    border: 1px pink solid;
+    
+}
