@@ -13,7 +13,7 @@
                 <li id ="" class="row col-sm-2">
                     <a href="inscription" class="text-light">Inscription</a>
                 </li>
-                <li id = "" class="row col-sm-2"><a href="connexion" class="text-light">Connexion</a></li>
+                <li id = "" class="row col-sm-2"><a href="login" class="text-light">Connexion</a></li>
                 <li class="dropdown">
                     <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="services" role="button" aria-haspopup="true" aria-expanded="false">Services</a> <!-- lien -->
                     <div class="dropdown-menu">

@@ -1,6 +1,6 @@
 <script src= "<?= JS; ?>CherchJob.js"></script> 
  
-<div class="chercheForm">
+<!--<div class="chercheForm">
     <p>Je cherche un job</p>
         
     <form method="post" action="insertUser" class="formuInscription">
@@ -13,7 +13,7 @@
             </div>
 
     </form>
-</div>
+</div>-->
 
 <div class="inscription">
     <p>Inscription</p>
@@ -27,7 +27,6 @@
         <?= $this->session->show('erreurExist'); ?>
         <?= $this->session->show('vide'); ?>
     
-    ?>
         <div>
             <input type="email" class="champ" name="mail" placeholder="Votre mail"/>
         </div>

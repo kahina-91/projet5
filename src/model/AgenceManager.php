@@ -1,11 +1,11 @@
 <?php
-	namespace kah\src\model;
+	/*namespace kah\src\model;
 
 	use kah\app\core\Session;
 	use kah\app\core\Request;
 	use kah\app\core\Controller;
 	use PDO;
-	use kah\src\model;
+	use kah\src\model;*/
 
 class AgenceManager extends BddManager
 {
@@ -27,11 +27,10 @@ class AgenceManager extends BddManager
 
 	}
 
-	public function getNounou($nounouId, $direction = null)
+	public function getNounou($nounouId)
 	{
 
-		$sql = ('SELECT * FROM nounous WHERE id = ?
-       ;');
+		$sql = 'SELECT * FROM nounous WHERE id = ?';
 		
 		$req = $this->getBdd()->prepare($sql);
         $req->execute(array($nounouId));
@@ -42,40 +41,44 @@ class AgenceManager extends BddManager
 	public function getNounous()
 	{
 
-		$sql = ('SELECT * FROM nounous;');
+		$sql = 'SELECT id, nom, prenom, naissance, mail, tel, adress, experience FROM nounous WHERE profil_valide = "0" ORDER BY id';
 		$req = $this->getBdd()->prepare($sql);
 		$req->execute();
  		return $req;
 
 	}
 
-	public function getHours()
+	public function getNounousValide()
 	{
-		$sql = ('SELECT * FROM heures
-       ;');
+		$sql = ('SELECT COUNT(*) AS total FROM nounous WHERE profil_valide = "0"');
 
-		$hours = $this->getBdd()->prepare($sql);
-        $hours->execute();
-        return $hours;
+		$rqt = $this->getBdd()->prepare($sql);
+		$rqt->execute();
+		$nbr = $rqt->fetch();
+		$total = $nbr['total'];
+		//var_dump($total);die;
+        return $total;
 
 	}
 
 	public function insertNounou($nom, $prenom, $naissance, $mail, $tel, $adress, $experience)
 	{
-		$sql = ('INSERT INTO nounous(nom, prenom, naissance, mail, tel, adress, experience) VALUES(?, ?, ?, ?, ?, ?, ?)');
+		$sql = ('INSERT INTO nounous(nom, prenom, naissance, mail, tel, adress, experience, profil_valide) VALUES(?, ?, ?, ?, ?, ?, ?, 0)');
 		$req = $this->getBdd()->prepare($sql);
         $nounous = $req->execute(array($nom, $prenom, $naissance, $mail, $tel, $adress, $experience));
         return $nounous;
 	}
 
 
-        public function insertNounouAdmi() {
+	public function nounouValidat($nounouId) 
+	{
 
-			$sql = ('INSERT INTO nounous(nom, prenom, date_naissance, mail, tel, adress, exp) VALUES(?, ?, ?, ?, ?, ?, ?)');
+		$sql = ('UPDATE  nounous SET profil_valide = "1" WHERE id = ?');
 
-			$nounous = $this->getBdd()->prepare($sql);
-	        $nounous->execute(array($nom, $prenom, $date_naissance, $mail, $tel, $adress, $exp));            
-            
-        }
+		$nounous = $this->getBdd()->prepare($sql);
+		$nounous->execute(array($nounouId));            
+		return $nounous;
+
+	}
 
 }

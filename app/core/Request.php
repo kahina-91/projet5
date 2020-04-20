@@ -1,6 +1,6 @@
 <?php
 
-namespace kah\app\core;
+//namespace kah\app\core;
 
 
 

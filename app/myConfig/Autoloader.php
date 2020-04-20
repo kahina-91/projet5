@@ -1,5 +1,5 @@
 <?php
-namespace kah\app\core\_config;
+//namespace kah\app\myConfig;
 
 class Autoloader{
 	public static function register()
@@ -26,34 +26,9 @@ class Autoloader{
         
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
-	
 
 
-	static function autoload($class){
-        if (strpos($class, __NAMESPACE__ . '\\') === 0){
-            $class = str_replace(__NAMESPACE__ . '\\', '', $class);
-            $class = str_replace('\\', '/', $class);
-            if(file_exists(MODEL.$class.'.php'))
-		{
-			require_once (MODEL.$class.'.php');
-		}else if(file_exists(VIEW.$class.'.php'))
-		{
-			require_once (VIEW.$class.'.php');
-		}else if(file_exists(CONTROLLER.$class.'.php'))
-		{
-			require_once (CONTROLLER.$class.'.php');
-		}
-		else if(file_exists(CORE.$class.'.php'))
-		{
-			require_once (CORE.$class.'.php');
-		}
-        }
-    }
-
-
-
-
-	/*public static function autoload($class)
+	public static function autoload($class)
 	{
 		if(file_exists(MODEL.$class.'.php'))
 		{
@@ -71,6 +46,27 @@ class Autoloader{
 		}
 		
     	
-    }*/
+    }
  
 }
+
+
+
+
+
+
+/*class Autoloader{
+
+    static function register(){
+        spl_autoload_register(array(__CLASS__,'autoload'));
+    }
+
+    static function autoload($class){
+        if (strpos($class, __NAMESPACE__. '\\' )  === 0){
+
+            $class = str_replace(__NAMESPACE__.'\\', '',$class);
+            $class = str_replace('\\', '/',$class);
+            require 'class/'.$class.'.php';
+        }
+    }
+}*/

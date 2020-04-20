@@ -1,24 +1,25 @@
 <?php 
 
-namespace kah\src\model;
+/*namespace kah\src\model;
 use PDO;
-use kah\src\model;
+use kah\src\model;*/
 
 class UserManager extends BddManager
 {
 
-    public function insertUser($pseudo, $password1, $password2, $mail)
+    public function insertUser($pseudo, $password1, $password2, $mail, $role)
     {
         
-        $sql = ('INSERT INTO user(pseudo, password1, password2, mail, creatDate, role)VALUES(?, ?, ?, ?, NOW(), ROLE_USER)');
+        $sql = 'INSERT INTO user(pseudo, password1, password2, creatDate, mail, role)VALUES(?, ?, ?, NOW(), ?, ?)';
         $rqt = $this->getBdd()->prepare($sql);
-        $rqt->execute(array($pseudo, password_hash($password1, PASSWORD_BCRYPT), password_hash($password2, PASSWORD_BCRYPT), $mail));
+        $rqt->execute(array($pseudo, password_hash($password1, PASSWORD_BCRYPT), password_hash($password2, PASSWORD_BCRYPT), $mail, $role));
+        
         return $rqt;
     }  
     public function userUnique($pseudo)
     {
 
-        $sql = ('SELECT * FROM user WHERE pseudo = ?');
+        $sql = 'SELECT * FROM user WHERE pseudo = ?';
         $rqt = $this->getBdd()->prepare($sql);
         $rqt->execute(array($pseudo));
         $exist = $rqt->rowCount();
@@ -30,7 +31,7 @@ class UserManager extends BddManager
     public function getUser($pseudo, $password)
     {
 
-        $sql = ('SELECT * FROM user WHERE pseudo = ?');
+        $sql = 'SELECT * FROM user WHERE pseudo = ?';
         $rqt = $this->getBdd()->prepare($sql);
         $rqt->execute(array($pseudo));
         $result = $rqt->fetch();
@@ -39,6 +40,21 @@ class UserManager extends BddManager
             'result' => $result,
             'isvalid' => $isvalid
         ];
+    }
+
+    public function getAdmin($password)
+    {
+
+        $sql = 'SELECT * FROM user WHERE role = "ROLE_ADMIN"';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute();
+        $admin = $rqt->fetch();
+        $adminIsvalid = password_verify($password, $admin['password1']);
+        return [
+            'admin' => $admin,
+            'adminIsvalid' => $adminIsvalid
+        ];
+        
     }
 
 }

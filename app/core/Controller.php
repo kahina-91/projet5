@@ -1,6 +1,6 @@
 <?php
 
-namespace kah\app\core;
+/*namespace kah\app\core;
 
 use kah\app\core\Session;
 use kah\app\core\Request;

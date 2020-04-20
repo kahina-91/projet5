@@ -124,6 +124,38 @@ body
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.paginNum .num 
+{
+
+    border: 1px solid grey!important;
+
+}
+.valid
+{
+    position: relative;
+    top: 200px;
+    
+}
+.paginNum ul li
+{
+    
+    display: inline;
+  
+}
+.paginNum ul li:first-child, .paginNum ul li:last-child
+{
+    
+    border: 1px solid grey!important;
+
+}
+.paginNum ul li a
+{
+
+    padding-right: 7px;
+    padding-left: 7px;
+
+}
 a
 {
     color: white!important;

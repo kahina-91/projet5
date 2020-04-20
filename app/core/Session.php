@@ -2,7 +2,7 @@
 /**
  * 
  */
-namespace kah\app\core;
+//namespace kah\app\core;
 
 class Session
 {

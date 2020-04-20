@@ -1,8 +1,8 @@
 <?php
 
-namespace kah\src\model;
+/*namespace kah\src\model;
 use PDO;
-use kah\src\model;
+use kah\src\model;*/
 
 class CommentManager extends BddManager
 {

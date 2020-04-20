@@ -1,8 +1,8 @@
 <?php
 
-namespace kah\app\core;
+/*namespace kah\app\core;
 
-use kah\app\core\Request;
+use kah\app\core\Request;*/
 
 class Router{
 	private $request;
@@ -26,7 +26,7 @@ class Router{
 
                     'getHours' => ['controller' => 'Frontend', 'method' => 'getHours'],
 
-					'connexion' => ['controller' => 'Frontend', 'method' => 'connexion'],
+					'login' => ['controller' => 'Frontend', 'method' => 'login'],
 
 					'logout' => ['controller' => 'Frontend', 'method' => 'logout'],
 
@@ -40,7 +40,7 @@ class Router{
 
                     'postuler' => ['controller' => 'Frontend', 'method' => 'insertNounou'],
 
-            		'insertNounouAdmi' => ['controller' => 'backend', 'method' => 'insertNounouAdmis'],
+            		'nounouValidat' => ['controller' => 'backend', 'method' => 'nounouValidat'],
 		];
 	public function __construct()
 	{

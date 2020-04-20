@@ -1,10 +1,10 @@
 <?php 
 
-namespace kah\src\controller;
+/*namespace kah\src\controller;
 
 use kah\app\core\Session;
 use kah\app\core\Request;
-use kah\app\core\Controller;
+use kah\app\core\Controller;*/
 
 	class Frontend extends Controller
 	{
@@ -87,7 +87,7 @@ use kah\app\core\Controller;
     
         }
 
-        public function connexion()
+        public function login()
         {
 
             return $this->render('frontend/connexion'); 
@@ -96,7 +96,6 @@ use kah\app\core\Controller;
         public function trouver_job()
         {
             $agenceManager = new AgenceManager();
-            $hours = $agenceManager->getHours();
             return $this->render('frontend/trouver_job'); 
             
         }
@@ -132,63 +131,34 @@ use kah\app\core\Controller;
             $password1 = $this->request->get('password1');
             $password2 = $this->request->get('password2');
             $mail = $this->request->get('mail');
-            
+            $role = 'ROLE_CLIENT';
             $userManager = new UserManager();
             $exist = $userManager->userUnique($pseudo);
-            //var_dump($exist);exit;
-            /*if(!$userManager->userUnique($pseudo))
-            {
-                $this->request->getSession()->set('erreurExist', 'Pseudo exist déja veuillez saisir un autre pseudo!!');
-                header('location: inscription');
-                exit;
-            }*/
+
             if($submit)
             {
+                if($exist == 0 AND !empty($pseudo) AND !empty($password1) AND !empty($password2) AND !empty($mail) AND ($password1 == $password2))
+                {        
 
-                if(!empty($pseudo) AND !empty($password1) AND !empty($password2) AND !empty($mail))
-                {
-                    if($exist == 0)
-                    {
-                        $pseudolength = strlen($pseudo);
-                        if ($pseudolength <= 255) 
-                        {
-                            if($password1 == $password2)
-                            {
+                    $userManager->insertUser($pseudo, $password1, $password2, $mail, $role);
+                    //var_dump($pseudo);die;
+                    $this->request->getSession()->set('insertUser', 'Votre compte a bien été crée!!');
 
-                                $userManager = new UserManager();
-                                $users = $userManager->insertUser($pseudo, $password1, $password2, $mail);
-                                //var_dump($users);die;
-                                $this->request->getSession()->set('insertUser', 'Votre compte a bien été crée!!');
-
-                            }else
-                            {
-
-                                $this->request->getSession()->set('erreurPassword', 'Vos mot de passe ne correspondent pas!!');
-
-                            }    
-
-                        }
-                        else
-                        {
-
-                            $this->request->getSession()->set('erreurPseudo', 'Votre pseudo ne doit pas dépasser 255 caractères!!');
-
-                        }
-                    } else
-                    {
-                        
-                        $this->request->getSession()->set('erreurExist', 'Pseudo exist déja veuillez saisir un autre pseudo!!');
-
-                    }
                 }else
                 {
 
-                    $this->request->getSession()->set('vide', 'Veuillez remplir les champs!!');
+                    if($exist == 1)
+                        $this->request->getSession()->set('erreurExist', 'Pseudo exist déja veuillez saisir un autre pseudo!!');
+
+                    if($password1 !== $password2)
+                        $this->request->getSession()->set('erreurPassword', 'Vos mot de passe ne correspondent pas!!');
+
+                    if(empty($pseudo) AND empty($password1) AND empty($password2) AND empty($mail))
+                        $this->request->getSession()->set('vide', 'Veuillez remplir les champs!!');
 
                 }
-
-            }
-
+            }    
+      
             header('Location: inscription');
 
         }
@@ -208,6 +178,8 @@ use kah\app\core\Controller;
             $pseudo = $this->request->get('pseudo');
             $userManager = new UserManager();
             $verif = $userManager->getUser($pseudo, $password);
+            $admin = $userManager->getAdmin($password);
+            //var_dump($admin);die;
             if($submit)
             {
 
@@ -226,8 +198,17 @@ use kah\app\core\Controller;
                     {
 
                         $this->request->getSession()->set('userExist', 'L\'address mail ou le mot de passe n\'existe pas!!');
-                        header('Location: connexion');
+                        header('Location: login');
 
+                    }
+                    if($admin AND $admin['adminIsvalid'])
+                    {
+
+                        $agenceManager = new AgenceManager();
+                        
+                        //return $this->render('backend/admin', ['nounous' => $nounous]);
+                        header('Location: admin?p=1');
+                        
                     }
 
                 }

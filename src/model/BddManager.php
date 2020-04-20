@@ -1,6 +1,6 @@
 <?php
 
-namespace kah\src\model;
+//namespace kah\src\model;
 
 abstract class BddManager
 {

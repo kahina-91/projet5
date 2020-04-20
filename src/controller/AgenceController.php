@@ -1,8 +1,8 @@
 <?php
 
-namespace kah\src\controller;
+/*namespace kah\src\controller;
 
-use kah\app\core\Controller;
+use kah\app\core\Controller;*/
 
 include_once (CORE.'Session.php');
 include_once (MODEL.'AgenceManager.php');
