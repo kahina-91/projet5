@@ -21,27 +21,7 @@
             <img src="assets/images/852.jpg"/>
         </div>
     </div>
-    <div class="comments">
-        <?php 
-        while ($comment = $comments->fetch())
-        {
-        ?>
-            <div class="oneComment bg-light "> 
-                <div class="">
-                    <?= htmlspecialchars($comment['author']); ?>
-
-                </div>
-                <div class="">
-                    <?= htmlspecialchars($comment['comment']); ?>
-                </div>
-                <div class="">
-                    <?= htmlspecialchars($comment['date_creation']); ?>
-                </div>
-            </div>
-        <?php    
-        }
-        ?>
-    </div>
+    
    <div class="rech">
         <form action="rechercheNounou" method="post">
             <input type="search" name="recherch" placeholder="Recherche...">
@@ -88,4 +68,23 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
             </div>
         </div>
+    </div>
+    <div class="comments"> 
+        <div class="comment">
+            <?php while ($comment = $liste->fetch()) { ?>
+                <?= htmlspecialchars($comment['comment']); ?>
+            <?php } ?>
+        </div>
+        <?php if ($page > 1):
+            ?><a href="?page=<?php echo $page - 1; ?>">&laquo;</a><?php
+        endif;
+
+        for ($i = 1; $i <= $nbrPages; $i++):
+            ?><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a> <?php
+        endfor;
+
+        if ($page < $nbrPages):
+            ?><a href="?page=<?php echo $page + 1; ?>">&raquo;</a><?php
+        endif;
+        ?>
     </div>

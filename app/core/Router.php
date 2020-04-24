@@ -38,7 +38,13 @@ class Router{
 
                     'showMarkers' => ['controller' => 'Frontend', 'method' => 'showMarkers'],
 
-                    'postuler' => ['controller' => 'Frontend', 'method' => 'insertNounou'],
+					'postuler' => ['controller' => 'Frontend', 'method' => 'insertNounou'],
+
+					'insertLatLonNounou'  => ['controller' => 'Backend', 'method' => 'insertLatLonNounou'],
+					
+					'insertNounouValid'  => ['controller' => 'Backend', 'method' => 'insertNounouValid'],
+
+					'pageValidatNounou' => ['controller' => 'backend', 'method' => 'pageValidatNounou'],
 
             		'nounouValidat' => ['controller' => 'backend', 'method' => 'nounouValidat'],
 		];

@@ -12,9 +12,17 @@ use kah\app\core\Controller;*/
 		public function home()
 		{ 
            
-			$commentManager = new CommentManager();
-			$comments = $commentManager->getComments();
-			return $this->render('frontend/home', ['comments' => $comments]);
+            $commentManager = new CommentManager();
+            $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+            $limite = 1;
+            
+            $debut = ($page-1) * $limite;
+            $comments = $commentManager->getComments($limite, $debut);
+            $nbr = $comments['nbrTotal'];
+            $liste = $comments['comments'];
+            $nbrPages = ceil($nbr / $limite);
+            //var_dump($nbrPages);die;
+			return $this->render('frontend/home', ['liste' => $liste, 'nbrPages' => $nbrPages, 'page' => $page]);
 		}
     	public function addComment()
         {
@@ -37,31 +45,30 @@ use kah\app\core\Controller;*/
         public function showMarkers()
         {
             $agenceManager = new AgenceManager();
-            $getAgences = $agenceManager->getAgences();
+            $getNounousValids = $agenceManager->getNounousValids();
 
-            if($getAgences->rowCount() > 0){
-            // On initialise un tableau associatif
-                $tableauAgences = [];
-                $tableauAgences['agences'] = [];
+            if($getNounousValids->rowCount() > 0){
 
-                // On parcourt les agences
-                while($row = $getAgences->fetch(PDO::FETCH_ASSOC)){
+                $tableauNounousValids = [];
+                $tableauNounousValids['nounousValids'] = [];
+
+                while($row = $getNounousValids->fetch(PDO::FETCH_ASSOC)){
                     extract($row);
 
-                    $agen = [
+                    $nounous = [
                         "id" => $id,
                         "lat" => $lat,
                         "lon" => $lon,
-                        "ville" => $ville,
+                        //"ville" => $ville,
                     ];
 
-                    $tableauAgences['agences'][] = $agen;
+                    $tableauNounousValids['nounousValids'][] = $nounous;
                 }
 
                 // On envoie le code réponse 200 OK
                 http_response_code(0);
                 // On encode en json et on envoie
-                echo json_encode($tableauAgences);
+                echo json_encode($tableauNounousValids);
 
             }else{
                 // On gère l'erreur
@@ -73,8 +80,8 @@ use kah\app\core\Controller;*/
         public function trouver_nounou()
         {
             $agenceManager = new AgenceManager();
-            $agences = $agenceManager->getAgences();
-            return $this->render('frontend/trouver_nounou', ['agences' => $agences]);
+            $nounous = $agenceManager->getNounousValids();
+            return $this->render('frontend/trouver_nounou', ['nounous' => $nounous]);
         }
 
         public function getAgence()
@@ -111,7 +118,7 @@ use kah\app\core\Controller;*/
             $experience = $this->request->get('experience');
             $agenceManager = new AgenceManager();
             $nounous = $agenceManager->insertNounou($nom, $prenom, $naissance, $mail, $tel, $adress, $experience);
-           
+           //var_dump($experience);die;
             $this->request->getSession()->set('insertNounou', 'Demande envoyé!!');                
              header('Location: trouver_job');
         }
@@ -133,6 +140,7 @@ use kah\app\core\Controller;*/
             $mail = $this->request->get('mail');
             $role = 'ROLE_CLIENT';
             $userManager = new UserManager();
+            $agenceManager = new AgenceManager();
             $exist = $userManager->userUnique($pseudo);
 
             if($submit)
@@ -203,11 +211,9 @@ use kah\app\core\Controller;*/
                     }
                     if($admin AND $admin['adminIsvalid'])
                     {
-
-                        $agenceManager = new AgenceManager();
                         
                         //return $this->render('backend/admin', ['nounous' => $nounous]);
-                        header('Location: admin?p=1');
+                        header('Location: admin');
                         
                     }
 

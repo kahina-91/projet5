@@ -6,12 +6,25 @@ use kah\src\model;*/
 
 class CommentManager extends BddManager
 {
-	public function getComments()
+	public function getComments($limite, $debut)
 	{
-		$comments = $this->getBdd()->prepare('SELECT * FROM comments');
+        
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM comments LIMIT :limite OFFSET :debut';
+        $comments = $this->getBdd()->prepare($sql);
+        $comments->bindValue('debut', $debut, PDO::PARAM_INT);
+        $comments->bindValue('limite', $limite, PDO::PARAM_INT);
         $comments->execute();
-        return $comments;
-	}
+
+        $resultRows = $this->getBdd()->query('SELECT found_rows()');;
+
+        $nbrTotal = $resultRows->fetchColumn();
+ //var_dump($nbrTotal);die;
+        return [
+            'comments' => $comments, 
+            'nbrTotal' => $nbrTotal
+        ];
+    }
+    
 	public function addComment($author, $comment)
     {
         

@@ -2,14 +2,14 @@
 
 /*namespace kah\src\controller;
 
-use kah\app\core\Controller;*/
+use kah\app\core\Controller;
 
 include_once (CORE.'Session.php');
 include_once (MODEL.'AgenceManager.php');
     $session = new Session();
  
     $agenceManager = new AgenceManager();
-            $getAgences = $agenceManager->getAgences();
+            $getAgences = $agenceManager->getNounousValids();
  var_dump($getAgences);
             if($getAgences->rowCount() > 0){
             // On initialise un tableau associatif
@@ -37,5 +37,5 @@ include_once (MODEL.'AgenceManager.php');
                 // On gère l'erreur
                 http_response_code(405);
                 echo json_encode(["message" => "La méthode n'est pas autorisée"]);
-            }
+            }*/
 ?>

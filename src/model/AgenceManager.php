@@ -9,9 +9,9 @@
 
 class AgenceManager extends BddManager
 {
-	public function getAgences()
+	public function getNounousValids()
 	{
-		$sql = 'SELECT * FROM agences';
+		$sql = 'SELECT * FROM user WHERE role = "ROLE_NOUNOU"';
 		$query = $this->getBdd()->prepare($sql);
         $query->execute();
         return $query;
@@ -27,45 +27,43 @@ class AgenceManager extends BddManager
 
 	}
 
-	public function getNounou($nounouId)
+
+	public function insertLatLonNounou($lat, $lon, $nounouId)
 	{
 
-		$sql = 'SELECT * FROM nounous WHERE id = ?';
-		
-		$req = $this->getBdd()->prepare($sql);
-        $req->execute(array($nounouId));
-        $nounous = $req->fetch();
- 		return $nounous;
-	}
+		$sql = 'UPDATE  nounous SET lat = :lat, lon = :lon WHERE id = ?';
 
-	public function getNounous()
-	{
-
-		$sql = 'SELECT id, nom, prenom, naissance, mail, tel, adress, experience FROM nounous WHERE profil_valide = "0" ORDER BY id';
-		$req = $this->getBdd()->prepare($sql);
-		$req->execute();
- 		return $req;
+		$nounous = $this->getBdd()->prepare($sql);
+		$nounous->execute(array($lat, $lon, $nounouId));            
+		return $nounous;
 
 	}
 
-	public function getNounousValide()
+	public function getNounous($limite, $debut)
 	{
-		$sql = ('SELECT COUNT(*) AS total FROM nounous WHERE profil_valide = "0"');
+        
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM nounous WHERE profil_valide = "0" LIMIT :limite OFFSET :debut';
+        $nounou = $this->getBdd()->prepare($sql);
+        $nounou->bindValue('debut', $debut, PDO::PARAM_INT);
+        $nounou->bindValue('limite', $limite, PDO::PARAM_INT);
+        $nounou->execute();
 
-		$rqt = $this->getBdd()->prepare($sql);
-		$rqt->execute();
-		$nbr = $rqt->fetch();
-		$total = $nbr['total'];
-		//var_dump($total);die;
-        return $total;
+        $resultRows = $this->getBdd()->query('SELECT found_rows()');;
 
-	}
+        $nbrTotal = $resultRows->fetchColumn();
+// var_dump($nounou->fetchAll());die;
+        return [
+            'nounou' => $nounou, 
+            'nbrTotal' => $nbrTotal
+        ];
+    }
 
 	public function insertNounou($nom, $prenom, $naissance, $mail, $tel, $adress, $experience)
 	{
 		$sql = ('INSERT INTO nounous(nom, prenom, naissance, mail, tel, adress, experience, profil_valide) VALUES(?, ?, ?, ?, ?, ?, ?, 0)');
 		$req = $this->getBdd()->prepare($sql);
-        $nounous = $req->execute(array($nom, $prenom, $naissance, $mail, $tel, $adress, $experience));
+		$nounous = $req->execute(array($nom, $prenom, $naissance, $mail, $tel, $adress, $experience));
+		//var_dump($prenom);
         return $nounous;
 	}
 
@@ -78,6 +76,16 @@ class AgenceManager extends BddManager
 		$nounous = $this->getBdd()->prepare($sql);
 		$nounous->execute(array($nounouId));            
 		return $nounous;
+
+	}
+	
+	public function getNounouValid($nounouId)
+	{
+
+		$sql = 'SELECT * FROM nounous WHERE id = ?';
+		$query = $this->getBdd()->prepare($sql);
+        $query->execute(array($nounouId));
+        return $query;
 
 	}
 

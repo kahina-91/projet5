@@ -131,11 +131,19 @@ body
     border: 1px solid grey!important;
 
 }
+.validat
+{
+
+    background-color: red!important;
+
+}
 .valid
 {
+    
     position: relative;
     top: 200px;
-    
+    margin-bottom: 50px;
+       
 }
 .paginNum ul li
 {
@@ -224,7 +232,10 @@ a
     padding: 5px;
 
 }
-.
+.admin
+{
+    min-height: 100%;
+}
 .commente .btn
 {
      margin: auto!important;
@@ -253,10 +264,9 @@ a
 
     width: 70%;
     position: relative;
-    top: 300px;
+    top: 200px;
     border-radius: 10px;
     color: #696969;
-    color
     height: auto;
     background-color: whitesmoke;
     padding: 10px;

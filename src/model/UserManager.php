@@ -15,7 +15,19 @@ class UserManager extends BddManager
         $rqt->execute(array($pseudo, password_hash($password1, PASSWORD_BCRYPT), password_hash($password2, PASSWORD_BCRYPT), $mail, $role));
         
         return $rqt;
-    }  
+    } 
+    
+    public function insertNounouValid($pseudo, $password1, $password2, $mail, $role)
+    {
+        
+        $sql = 'INSERT INTO user(pseudo, password1, password2, creatDate, mail, role)VALUES(?, ?, ?, NOW(), ?, ?)';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute(array($pseudo, password_hash($password1, PASSWORD_BCRYPT), password_hash($password2, PASSWORD_BCRYPT), $mail, $role));
+        
+        return $rqt;
+    }
+
+
     public function userUnique($pseudo)
     {
 
@@ -27,6 +39,17 @@ class UserManager extends BddManager
         return $exist;
 
     } 
+
+    public function test()
+    {
+
+        $sql = 'SELECT * FROM user INNER JOIN nounous ON user.id = nounous.user_id';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute();
+        //var_dump($rqt->fetchAll());die;
+        return $rqt;
+
+    }
 
     public function getUser($pseudo, $password)
     {
