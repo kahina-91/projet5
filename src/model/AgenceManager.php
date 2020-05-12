@@ -1,37 +1,24 @@
 <?php
-	/*namespace kah\src\model;
+	namespace kah\model;
 
-	use kah\app\core\Session;
-	use kah\app\core\Request;
-	use kah\app\core\Controller;
+	use kah\model\BddManager;
 	use PDO;
-	use kah\src\model;*/
 
 class AgenceManager extends BddManager
 {
 	public function getNounousValids()
 	{
-		$sql = 'SELECT * FROM user WHERE role = "ROLE_NOUNOU"';
+		$sql = 'SELECT * FROM nounous WHERE profil_valide = "1"';
 		$query = $this->getBdd()->prepare($sql);
-        $query->execute();
+		$query->execute();
         return $query;
 
 	}
-
-	public function getAgence($recherch)
-	{
-		$sql = 'SELECT id, lat, ville FROM agences WHERE ville LIKE "?" ORDER BY id DESC';	
-		$query = $this->getBdd()->prepare($sql);
-        $query->execute(array("%".$recherch."%"));
-        return $query;
-
-	}
-
 
 	public function insertLatLonNounou($lat, $lon, $nounouId)
 	{
 
-		$sql = 'UPDATE  nounous SET lat = :lat, lon = :lon WHERE id = ?';
+		$sql = 'UPDATE  nounous SET lat = ?, lon = ? WHERE id = ?';
 
 		$nounous = $this->getBdd()->prepare($sql);
 		$nounous->execute(array($lat, $lon, $nounouId));            
@@ -51,19 +38,17 @@ class AgenceManager extends BddManager
         $resultRows = $this->getBdd()->query('SELECT found_rows()');;
 
         $nbrTotal = $resultRows->fetchColumn();
-// var_dump($nounou->fetchAll());die;
         return [
             'nounou' => $nounou, 
             'nbrTotal' => $nbrTotal
         ];
     }
 
-	public function insertNounou($nom, $prenom, $naissance, $mail, $tel, $adress, $experience)
+	public function insertNounou($nom, $prenom, $naissance, $mail, $pseudo, $tel, $adress, $experience)
 	{
-		$sql = ('INSERT INTO nounous(nom, prenom, naissance, mail, tel, adress, experience, profil_valide) VALUES(?, ?, ?, ?, ?, ?, ?, 0)');
+		$sql = ('INSERT INTO nounous(nom, prenom, naissance, mail, pseudo, tel, adress, experience, profil_valide) VALUES(?, ?, ?, ?, ?, ?, ?, 0)');
 		$req = $this->getBdd()->prepare($sql);
-		$nounous = $req->execute(array($nom, $prenom, $naissance, $mail, $tel, $adress, $experience));
-		//var_dump($prenom);
+		$nounous = $req->execute(array($nom, $prenom, $naissance, $mail, $pseudo, $tel, $adress, $experience));
         return $nounous;
 	}
 
@@ -78,7 +63,7 @@ class AgenceManager extends BddManager
 		return $nounous;
 
 	}
-	
+
 	public function getNounouValid($nounouId)
 	{
 
@@ -88,5 +73,17 @@ class AgenceManager extends BddManager
         return $query;
 
 	}
+	
+	public function nounouUnique($mail)
+    {
+
+        $sql = 'SELECT * FROM nounous WHERE mail = ?';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute(array($mail));
+        $exist = $rqt->rowCount();
+        
+        return $exist;
+
+    }
 
 }

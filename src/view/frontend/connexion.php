@@ -1,19 +1,20 @@
 <div class="connexion">
-    <p>Connectez vous</p>
+
+    <h2>Connectez vous</h2>
  
 
-    <form method="post" action="getUser" class="formuInscription">
+    <form method="post" action="getUser" class="formConnexion">
         <?= $this->session->show('vide'); ?>
         <?= $this->session->show('userExist'); ?>
         
         <div>
-            <input type="pseudo" class="champ" name="pseudo" placeholder="Votre pseudo"/>
+            <input type="text" class="champ" name="pseudo" placeholder="Votre pseudo"/>
         </div>
         <div>
             <input type="password" class="champ" name="password" placeholder="Mot de passe"/>
         </div>
         <div>
-            <input type="submit" class="btn" value="inscription" name="submit"/>
+            <input type="submit" class="btn" value="Connexion" name="submit"/>
         </div>
 
     </form>

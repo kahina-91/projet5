@@ -1,13 +1,13 @@
 <?php
 
-	//namespace kah\app\core;
+	namespace kah\core;
 
+	use kah\core\Request;
 	Class View
 	{
         
 		private $template;
 		private $request;
-		private $session;
 	
 		public function __construct()
 		{
@@ -25,11 +25,14 @@
            
 			extract($datas);
 			ob_start();
-			include_once(VIEW.$this->template.'.php');
-            // 'session' = $this->session;
+			require_once(VIEW.$this->template.'.php');
 			$content = ob_get_clean();
-            
-			include_once (VIEW.'template.php');
+			require_once(VIEW.'template.php');
+			return $content;
+		}
+
+		public function redirect($route) {
+			header("Location;".HOST.$route);
 		}
 
 	}

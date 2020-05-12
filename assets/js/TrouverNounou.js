@@ -4,7 +4,6 @@ class TrouverNounou
 	{
 		this.macarte = document.getElementById('carte');
 		this.mymap = L.map(this.macarte).setView([35.0000272, 2.9999826], 7);
-        this.infos = document.getElementsByClassName('infos');
        
     }
   creatMap()
@@ -15,15 +14,15 @@ class TrouverNounou
             maxZoom: 20
          }).addTo(this.mymap);
    
-   //L.marker([36.7621090707009, 2.9587682489693545], {icon : myIcon}).addTo(this.mymap);
+
        let xmlhttp = new XMLHttpRequest();
 
        xmlhttp.onreadystatechange = () => {
             
-           if(xmlhttp.readyState == 4){
-               // Si la transaction est un succès
-               if(xmlhttp.status == 0 || xmlhttp.status == 200){
-                   // On traite les données reçues
+           if(xmlhttp.readyState == 4)
+           {
+               if(xmlhttp.status == 0 || xmlhttp.status == 200)
+               {
                    let donnees = JSON.parse(xmlhttp.responseText);
                    
                    Object.entries(donnees.nounousValids).forEach(nounou => {
@@ -35,17 +34,16 @@ class TrouverNounou
                            shadowAnchor: [4,  62],
                            popupAnchor:  [-3,-76]
                         });
-                       document.getElementById("infos").textContent = nounou;
+                      
                        let marker = L.marker(
                             [nounou[1].lat, 
-                            nounou[1].lon]/*, 
-                            {icon : myIcon}*/
-                       ).addTo(this.mymap)
-                       marker.bindPopup(nounou[1].ville).on('click', function(e)
-                       {
-                           document.getElementById("infos").textContent = nounou[1].ville + nounou[1].lat + nounou[1].lon;
-                       });
-                   })
+                            nounou[1].lon]
+                       ).bindPopup("").addTo(this.mymap);
+                       let mapopup = marker.getPopup();
+                       mapopup.setContent('Nom et prenom: '+nounou[1].nom+' '+nounou[1].prenom+'<br/>'+
+                       'Adress: '+nounou[1].adress+'<br/>');
+                       
+                   });
                    
                }else{
                    console.log(xmlhttp.statusText);
@@ -61,4 +59,8 @@ class TrouverNounou
 }
 
  let trouver = new TrouverNounou();
- trouver.creatMap(); 
+ trouver.creatMap();
+
+
+
+ 

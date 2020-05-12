@@ -1,53 +1,42 @@
 <?php
 
-/*namespace kah\app\core;
+namespace kah\core;
 
-use kah\app\core\Request;*/
+use kah\core\Request;
+use kah\controller\Frontend;
+use kah\controller\Backend;
+use Exception;
 
 class Router{
 	private $request;
-	private $routes = [
+	
+	private $routes = 
+	[
+		
+					'home' 			 => ['controller' => 'Frontend', 'method' => 'home', 'vars' => 'id'],
+					'trouver_nounou' => ['controller' => 'Frontend', 'method' => 'trouver_nounou', 'vars' => 'id'],
+					'trouver_job'    => ['controller' => 'Frontend', 'method' => 'trouver_job'],
+					'insertUser' 	 => ['controller' => 'Frontend', 'method' => 'insertUser'],
+					'addComment'     => ['controller' => 'Frontend', 'method' => 'addComment'],
+					'login'          => ['controller' => 'Frontend', 'method' => 'login'],
+					'logout'         => ['controller' => 'Frontend', 'method' => 'logout'],
+					'pageUser'       => ['controller' => 'Frontend', 'method' => 'pageUser'],
+					'pageNounou'     => ['controller' => 'Frontend', 'method' => 'pageNounou'],
+					'getUser'        => ['controller' => 'Frontend', 'method' => 'getUser'],
+					'inscription' 	 => ['controller' => 'Frontend', 'method' => 'inscription'],
+					'showMarkers'    => ['controller' => 'Frontend', 'method' => 'showMarkers'],
+					'postuler'       => ['controller' => 'Frontend', 'method' => 'insertNounou'],
+					'editProfil'     => ['controller' => 'Frontend', 'method' => 'editProfil'],
 
-					'home' => ['controller' => 'Frontend', 'method' => 'home'],
+                    'insertLatLonNounou'  => ['controller' => 'Backend', 'method' => 'insertLatLonNounou'],
+					'insertNounouValid'   => ['controller' => 'Backend', 'method' => 'insertNounouValid', 'vars' => 'id'],
+					'deleteNounou'   	  => ['controller' => 'Backend',  'method' => 'deleteNounou'],
+					'admin'               => ['controller' => 'Backend', 'method'  => 'getNounous', 'vars' => 'id'],
+					'pageValidatNounou'   => ['controller' => 'Backend', 'method' => 'pageValidatNounou', 'vars' => 'id'],
 
-					'trouver_nounou' => ['controller' => 'Frontend', 'method' => 'trouver_nounou'],
+					'page404'                 => ['controller' => 'ErrorPages', 'method' => 'page404', 'vars' => 'id'],
 
-					'trouver_job' => ['controller' => 'Frontend', 'method' => 'trouver_job'],
-
-					'insertUser' => ['controller' => 'Frontend', 'method' => 'insertUser'],
-
-					'deleteNounou' => ['controller' => 'Backend', 'method' => 'deleteNounou'],
-
-					'admin' => ['controller' => 'Backend', 'method' => 'getNounous'],
-
-					'addComment' => ['controller' => 'Frontend', 'method' => 'addComment'], 
-
-					'rechercheNounou' => ['controller' => 'Frontend', 'method' => 'getAgence'],
-
-                    'getHours' => ['controller' => 'Frontend', 'method' => 'getHours'],
-
-					'login' => ['controller' => 'Frontend', 'method' => 'login'],
-
-					'logout' => ['controller' => 'Frontend', 'method' => 'logout'],
-
-					'pageUser' => ['controller' => 'Frontend', 'method' => 'pageUser'],
-
-					'getUser' => ['controller' => 'Frontend', 'method' => 'getUser'],
-					
-					'inscription' => ['controller' => 'frontend', 'method' => 'inscription'],
-
-                    'showMarkers' => ['controller' => 'Frontend', 'method' => 'showMarkers'],
-
-					'postuler' => ['controller' => 'Frontend', 'method' => 'insertNounou'],
-
-					'insertLatLonNounou'  => ['controller' => 'Backend', 'method' => 'insertLatLonNounou'],
-					
-					'insertNounouValid'  => ['controller' => 'Backend', 'method' => 'insertNounouValid'],
-
-					'pageValidatNounou' => ['controller' => 'backend', 'method' => 'pageValidatNounou'],
-
-            		'nounouValidat' => ['controller' => 'backend', 'method' => 'nounouValidat'],
-		];
+	];
 	public function __construct()
 	{
 		
@@ -67,24 +56,30 @@ class Router{
 			}
 
 			$params = $this->getParams($action, $vars);
-
 			$request = new Request();
 			$request->setRoute($route);
 			$request->setParams($params);
 			$request->setController($controller);
 			$request->setMethod($method);
 
-			$this->request = $request;
+			
 
 		}else
 		{
-			throw new Exception('Cette page n\'existe pas.');
+			
+			$request = new Request();
+			$request->setRoute('404');
+			$request->setParams(['message' => "cette page n'existe pas"]);
+			$request->setController('ErrorPages');
+			$request->setMethod('page404');
 		}
+
+		$this->request = $request;
 	}
 
 	public function render()
 	{
-
+		
 		try
 		{
 
@@ -93,8 +88,8 @@ class Router{
 			$controller = $request->getController();
 			$method = $request->getMethod();
 			
+			$controller = 'kah\controller\\'.$controller;				
 			$currentController = new $controller($request);
-			
 			$currentController->$method();
 			
 		}

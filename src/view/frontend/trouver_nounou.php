@@ -4,7 +4,4 @@
     <div id="carte"></div>
 </div>
 
-<div class="infos" id="infos"></div>
-
 <script src= "<?= JS; ?>TrouverNounou.js"></script>
-

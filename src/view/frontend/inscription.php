@@ -1,23 +1,6 @@
-<script src= "<?= JS; ?>CherchJob.js"></script> 
- 
-<!--<div class="chercheForm">
-    <p>Je cherche un job</p>
-        
-    <form method="post" action="insertUser" class="formuInscription">
-        
-            <div>
-                <input type="text" class="champ" name="ou" placeholder="Ou ça?"/>
-            </div>
-            <div>
-                <input type="submit" class="btn" value="suivant" name="submit"/>
-            </div>
-
-    </form>
-</div>-->
-
 <div class="inscription">
-    <p>Inscription</p>
-    
+
+    <h2>Inscrivez vous</h2>
 
     <form method="post" action="insertUser" class="formuInscription">
         <?= $this->session->show('insertUser'); ?>
@@ -26,7 +9,7 @@
         <?= $this->session->show('erreurPassword'); ?>
         <?= $this->session->show('erreurExist'); ?>
         <?= $this->session->show('vide'); ?>
-    
+
         <div>
             <input type="email" class="champ" name="mail" placeholder="Votre mail"/>
         </div>

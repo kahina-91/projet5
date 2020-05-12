@@ -1,11 +1,8 @@
 <?php
 
-/*namespace kah\app\core;
+namespace kah\core;
 
-use kah\app\core\Session;
-use kah\app\core\Request;
-use kah\app\core\View;*/
-
+use kah\core\View;
 class Controller
 {
 
@@ -16,7 +13,7 @@ class Controller
     public function __construct($request) 
     {
         $this->request = $request;
-        $this->session = $this->request->getSession();//new Session();
+        $this->session = $this->request->getSession();
         $this->view = new View();
     }
 
@@ -33,8 +30,4 @@ class Controller
         $this->view->redirect($route);
     }
     
-    public function error404()
-    {
-    	echo '404';
-    }
 }

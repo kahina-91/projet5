@@ -1,38 +1,46 @@
-<script src= "<?= JS; ?>InsertNounou.js"></script>
 <div class="admin">
-
+    <button class="deconnect"><a href="logout">Déconnecter</a></button>
     <div class="nounous">
-        <div class="nounou"> 
+        <div class="nounou">
+            <?= $this->session->show('admin'); ?>
+            <?= $this->session->show('insertNounouValid'); ?>
             <i class="fa fa-user-circle" aria-hidden="true"></i>
-            <?php while ($nounous = $liste->fetch()) { ?>
-                <div class="">Nom et prénom:
-                    <?= htmlspecialchars($nounous['nom']); ?>
-                    <?= htmlspecialchars($nounous['prenom']); ?>
-                </div>
+            <div class="">Nom et prénom:
+                <?= htmlspecialchars($nounou['nom']); ?>
+                <?= htmlspecialchars($nounou['prenom']); ?>
+            </div>
+            <div class="">Pseudo:
+                <?= htmlspecialchars($nounou['pseudo']); ?>
+            </div>
+            <div class="">Date de naissance:
+                <?= htmlspecialchars($nounou['naissance']); ?>
+            </div>
+            <div class="">L'adress mail:
+                <?= htmlspecialchars($nounou['mail']); ?>
+            </div>
+            <div class="">Numéro de téléphone:
+                <?= htmlspecialchars($nounou['tel']); ?>
+            </div>
+            <div class="">Adress:
+                <?= htmlspecialchars($nounou['adress']); ?>
+            </div>
 
-                <div class="">Date de naissance:
-                    <?= htmlspecialchars($nounous['naissance']); ?>
-                </div>
-                <div class="">L'adress mail:
-                    <?= htmlspecialchars($nounous['mail']); ?>
-                </div>
-                <div class="">Numéro de téléphone:
-                    <?= htmlspecialchars($nounous['tel']); ?>
-                </div>
-                <div class="">Adress:
-                    <?= htmlspecialchars($nounous['adress']); ?>
-                </div>
+            <div class="">Expérience:
 
-                <div class="">Expérience:
+                <?= htmlspecialchars($nounou['experience']); ?>
 
-                    <?= htmlspecialchars($nounous['experience']); ?>
+            </div>
 
-                </div>
-                <a href="deleteNounou&id=<?= $nounous['id'] ?>"><i class="fa fa-times-circle" aria-hidden="true">supprimer</i></a>
-                <a href="pageValidatNounou&id=<?= $nounous['id'] ?>"><i class="fa fa-times-circle" aria-hidden="true">Valider</i></a>
-            
-            <?php } ?>
+            <div class="">
+
+                <?= htmlspecialchars($nounou['avatar']); ?>
+
+            </div>
+                <button><a href="deleteNounou&id=<?= $nounou['id']; ?>">supprimer</a></button>
+                <button id="vali"> <a href="pageValidatNounou&id=<?= $nounou['id']; ?>">Valider</a></button>
         </div>
+        
+        
         <div class="paginNum">
             
             <?php if ($page != 1):
@@ -52,3 +60,4 @@
         
     </div>
 </div>
+<script src= "<?= JS; ?>ValidatNounou.js"></script>

@@ -1,8 +1,8 @@
 <?php 
 
-/*namespace kah\src\model;
-use PDO;
-use kah\src\model;*/
+namespace kah\model;
+
+use kah\model\BddManager;
 
 class UserManager extends BddManager
 {
@@ -40,17 +40,6 @@ class UserManager extends BddManager
 
     } 
 
-    public function test()
-    {
-
-        $sql = 'SELECT * FROM user INNER JOIN nounous ON user.id = nounous.user_id';
-        $rqt = $this->getBdd()->prepare($sql);
-        $rqt->execute();
-        //var_dump($rqt->fetchAll());die;
-        return $rqt;
-
-    }
-
     public function getUser($pseudo, $password)
     {
 
@@ -58,11 +47,34 @@ class UserManager extends BddManager
         $rqt = $this->getBdd()->prepare($sql);
         $rqt->execute(array($pseudo));
         $result = $rqt->fetch();
+        
         $isvalid = password_verify($password, $result['password1']);
         return [
             'result' => $result,
             'isvalid' => $isvalid
         ];
+    }
+
+    public function getId($pseudo)
+    {
+
+        $sql = 'SELECT id FROM user WHERE pseudo = ?';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute(array($pseudo));
+        $iduser = $rqt->fetch();
+        return $iduser;
+        
+
+    }
+
+    public function test($id, $pseudo)
+    {
+
+        $sql = 'INSERT INTO nounous (user_id) VALUES (?) WHERE pseudo = ?';
+        $rqt = $this->getBdd()->prepare($sql);
+        $rqt->execute(array($id, $pseudo));
+        return $rqt;
+
     }
 
     public function getAdmin($password)

@@ -1,5 +1,5 @@
 <?php
-//namespace kah\app\myConfig;
+namespace kah\core\myConfig;
 
 class Autoloader{
 	public static function register()
@@ -28,8 +28,12 @@ class Autoloader{
 	}
 
 
-	public static function autoload($class)
+	public static function autoload($namespace)
 	{
+
+		$elements = explode('\\', $namespace);
+		$class = $elements[count($elements) -1];
+
 		if(file_exists(MODEL.$class.'.php'))
 		{
 			require_once (MODEL.$class.'.php');
@@ -44,29 +48,7 @@ class Autoloader{
 		{
 			require_once (CORE.$class.'.php');
 		}
-		
-    	
+			
     }
  
 }
-
-
-
-
-
-
-/*class Autoloader{
-
-    static function register(){
-        spl_autoload_register(array(__CLASS__,'autoload'));
-    }
-
-    static function autoload($class){
-        if (strpos($class, __NAMESPACE__. '\\' )  === 0){
-
-            $class = str_replace(__NAMESPACE__.'\\', '',$class);
-            $class = str_replace('\\', '/',$class);
-            require 'class/'.$class.'.php';
-        }
-    }
-}*/

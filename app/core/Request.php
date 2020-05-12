@@ -1,8 +1,8 @@
 <?php
 
-//namespace kah\app\core;
+namespace kah\core;
 
-
+use kah\core\Session;
 
 Class Request
 {
@@ -15,8 +15,8 @@ Class Request
 
 	public function __construct()
     {
-      
-		$this->session = new Session($_SESSION);
+     
+		$this->session = new session($_SESSION);
 		
     }
 
@@ -33,10 +33,11 @@ Class Request
 
 	public function setController($controller)
 	{
+		
 		$this->controller = $controller;
 		return $this;
 	}
-
+	
 	public function getSession()
 	{
 
@@ -47,6 +48,7 @@ Class Request
 	public function getController()
 	{
 		return $this->controller;
+		
 	}
 
 	public function setMethod($method)
@@ -71,8 +73,10 @@ Class Request
 		return $this->params;
 	}
 
-	public function get($param)
+	public function get($param, $addHtmSpecialChars = 1)
 	{
+		if(!isset($this->params[$param])) return null;
+		if($addHtmSpecialChars) return htmlspecialchars($this->params[$param]);
 		return $this->params[$param];
 	}
 }
